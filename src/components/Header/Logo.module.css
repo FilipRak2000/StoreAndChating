@@ -1,0 +1,10 @@
+.span {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 5px;
+    font-size: 40px;
+}
+
+.logo{
+    text-align: center;
+}

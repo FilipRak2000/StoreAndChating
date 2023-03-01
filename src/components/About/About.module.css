@@ -1,0 +1,35 @@
+.aboutContainer{
+    background-color: #00807F;
+    margin-top: 20px;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.instruction{
+    background-color:#bdbdbd;
+    box-shadow: inset 1px 1px #fff, 1px 1px #000;
+}
+
+.bluescreen{
+    background-color: #0000FF;
+    width: 100%;
+}
+
+h4{
+    color: black;
+}
+
+.registerBtn{
+    
+    background-color:#bdbdbd;
+    margin-bottom: 10px;
+    color: black;
+    cursor: pointer;
+    box-shadow: inset 1px 1px #fff, 1px 1px #000;
+    font-size: 15px;
+}
+
+.privacy{
+    color: white
+}
