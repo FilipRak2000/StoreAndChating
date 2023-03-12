@@ -1,14 +1,14 @@
 
 export const initialState = {
-    Auth: false,
+    user: JSON.parse(window.localStorage.getItem('token-data')) ?? null
   };
 
 export const reducer = (state, action) => {
     switch (action.type) {
       case "login":
-        return { ...state, Auth: true };
+        return { ...state, user: action.user};
       case "logout":
-        return { ...state, Auth: false };
+        return { ...state, user: null };
       default:
         throw new Error(action.type);
     }

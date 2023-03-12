@@ -8,7 +8,7 @@ const Profile = () =>{
 
     return(
         <div className={`${style.profilecontainer} container`}>
-            My Profile
+            Change Password
             <ProfileDetails/>
         </div>
     )

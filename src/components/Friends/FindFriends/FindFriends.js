@@ -14,6 +14,7 @@ const FindFriends = (props) =>{
         }else{
             props.filter(term)
         }
+        setTerm('')
     }
 
     const focusInput = () =>{
@@ -29,9 +30,9 @@ const FindFriends = (props) =>{
     }
 
     return(
-        <div className="d-flex text-center">
+        <div className="text-center">
         <form>
-          <input ref={inputRef} onChange={updateTerm} value={term} type="text" placeholder="search" />
+          <input ref={inputRef} onChange={updateTerm} value={term} type="text" placeholder="search by email" />
           <button onClick={search} >Search</button>
         </form>
       </div>

@@ -1,36 +1,37 @@
-import AddFiles from "../AddFiles/AddFiles"
-import File from "../File/File"
-import style from '../Files/Files.module.css'
+import { useEffect, useState } from "react";
+import AddFiles from "../AddFiles/AddFiles";
+import File from "../File/File";
+import style from "../Files/Files.module.css";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { storage } from "../../../firebase";
+import useAuth from "../../../hooks/useAuth";
 
-const Files = () =>{
 
-    const files = [
-        {
-            id:1,
-            name:'file1',
-            img: 'skfnasfksaf'
-        }, 
-        {
-            id:2,
-            name:'file2',
-            img: 'brrrrrrr'
-        }, 
-        {
-            id:3,
-            name:'file2',
-            img: 'brrrrrrr'
-        }
-    ]
+const Files = () => {
+  const [auth] = useAuth();
+  const filesListRef = ref(storage, "usersfiles/" + `${auth.userId}/`);
+  const [filesList, setFilesList] = useState([]);
 
-    return(
-        <div className={`${style.filescontainer} container`}>
-            <AddFiles/>
-            <h1 className="text-center mt-3">My Files</h1>
-            {files.map(file => (
-                <File key={file.id} name={file.name}/>
-            ))}
-        </div>
-    )
-}
+  useEffect(() => {
+    listAll(filesListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setFilesList((prev) => [...prev, url]);
+        });
+      });
+    });
+  }, []);
 
-export default Files
+  return (
+    <div className={`${style.filescontainer} container`}>
+      <AddFiles />
+      <h1 className="text-center mt-3">My Files</h1>
+
+      {filesList.map((url) => {
+        return <File key={url} src={url} />;
+      })}
+    </div>
+  );
+};
+
+export default Files;

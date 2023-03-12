@@ -1,9 +1,11 @@
-const Profile = () =>{
+import Profile from "../../components/Profile/Profile"
+
+const MyProfile = () =>{
     return(
-        <div className="container">
-            <h1>My Profile</h1>
+        <div>
+            <Profile/>
         </div>
     )
 }
 
-export default Profile
+export default MyProfile

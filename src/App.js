@@ -1,10 +1,9 @@
 import "./App.css";
 import Menu from "./components/Menu/Menu";
 import Logo from "./components/Header/Logo";
-import About from "./components/About/About";
 import Layout from "./components/Layout/Layout";
 import AuthContext from "./context/authContext";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer} from "react";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -20,6 +19,9 @@ import NotFound from "./pages/404/404";
 import Login from "./pages/Auth/Login/Login";
 import Pricing from "./pages/Pricing/Pricing";
 import Register from "./pages/Auth/Register/Register";
+import MyProfile from "./pages/Profile/Profile";
+import { ChatContextProvider } from "./context/chatContext";
+
 
 
 function App() {
@@ -32,18 +34,18 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route
         path="/myfiles"
-        element={state.Auth ? <MyFiles /> : <Navigate to={"/login"} />}
+        element={state.user ? <MyFiles /> : <Navigate to={"/login"} />}
       />
       <Route
         path="/profile"
-        element={state.Auth ? <Profile /> : <Navigate to={"/login"} />}
+        element={state.user ? <MyProfile /> : <Navigate to={"/login"} />}
       />
       <Route path="/login" element={<Login />} />
       <Route path="/pricing" element={<Pricing/>} />
       <Route path="/register" element={<Register/>} />
       <Route
         path="/myfriends"
-        element={state.Auth ? <MyFriends /> : <Navigate to={"login"} />}
+        element={state.user ? <MyFriends /> : <Navigate to={"login"} />}
       />
       <Route path="*" element={<NotFound />} />
     </Routes>
@@ -53,12 +55,14 @@ function App() {
     <Router>
       <AuthContext.Provider
         value={{
-          isAuth: state.Auth,
-          login: () => dispatch({ type: "login" }),
+          user: state.user,
+          login: (user) => dispatch({ type: "login", user }),
           logout: () => dispatch({ type: "logout" }),
         }}
       >
+        <ChatContextProvider>
         <Layout logo={logo} menu={menu} content={content} />
+        </ChatContextProvider>
       </AuthContext.Provider>
     </Router>
   );

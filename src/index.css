@@ -4,3 +4,14 @@ body {
   font-size: 25px;
 }
 
+::-webkit-scrollbar{width: 20px; height: 20px;}
+::-webkit-scrollbar-thumb{
+  background-color:#bdbdbd;
+  box-shadow: inset 1px 1px #fff, 1px 1px #000;
+}
+
+::-webkit-scrollbar-track{
+  background-color: #e0e0e0;
+  box-shadow: inset 1px 1px #fff, 1px 1px #000;
+}
+
