@@ -27,7 +27,7 @@ const Menu = () => {
         <Link to='/myfriends' className={style.element}>Friends</Link>
         </li>
         <li className={style.menuItem}>
-        <Link to='/login' onClick={logout} className={style.element}>Logout</Link>
+        <Link to='/' onClick={logout} className={style.element}>Logout</Link>
         </li>
           </>
         ) : (
