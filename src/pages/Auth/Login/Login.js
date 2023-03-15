@@ -47,7 +47,7 @@ const Login = () => {
 
   return (
     <div className={`${style.loginlayout} container text-center`}>
-      <h1 className="text-center mt-2">Login</h1>
+      <h1>Login</h1>
 
       {valid === false ? (
         <div className={`${style.loginlayout} container text-center`}>

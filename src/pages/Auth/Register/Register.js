@@ -63,7 +63,7 @@ const Register = () => {
             placeholder="email"
           />
         </div>
-        <div className="mt-3">
+        <div className="mt-2">
           <input
             className="mx-2"
             type="password"

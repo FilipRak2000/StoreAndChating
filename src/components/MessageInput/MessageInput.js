@@ -32,7 +32,7 @@ const MessageInput = () =>{
         onChange={(e) => setText(e.target.value)}
         value={text}
       />
-      <button onClick={SendMessage}>send</button>
+    {text && <button onClick={SendMessage}>send</button>}
       </div>
     )
 }

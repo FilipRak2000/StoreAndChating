@@ -6,17 +6,14 @@ import useAuth from "../../../hooks/useAuth";
 
 
 
-const AddFiles = () => {
+const AddFiles = (props) => {
   const [file, setFile] = useState("");
   const [auth] = useAuth()
 
-  console.log(auth.userId)
-
-  useEffect(() =>{
     const uploadFile = () =>{
       const name = new Date().getDate() + file.name
       const storageRef = ref(storage, 'usersfiles/' + `${auth.userId}/` + name);
-
+      
 
       const uploadTask = uploadBytesResumable(storageRef, file);
 uploadTask.on('state_changed', 
@@ -36,19 +33,23 @@ uploadTask.on('state_changed',
     console.log(error)
   }, 
   () => {
-    // Handle successful uploads on complete
-    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
       console.log('File available at', downloadURL);
+      const shortname = uploadTask.snapshot.ref.name.substring(0, 5) + '...' + uploadTask.snapshot.ref.name.substring(uploadTask.snapshot.ref.name.length - 5)
+      const name = uploadTask.snapshot.ref.name
+      props.setFilesList((prev) => [...prev, {url:downloadURL, shortname: shortname, name: name}])
     });
   }
+  
 );
+setFile('')
+document.getElementById('file').value = '';
     }
-    file && uploadFile()
-  }, [file])
+  
 
   return (
-    <div className="container mt-1">
+    <div className="container mt-1 text-center">
+      
       <form className="uploader">
         <input
           type="file"
@@ -56,6 +57,7 @@ uploadTask.on('state_changed',
           onChange={(e) => setFile(e.target.files[0])}
         />
       </form>
+      {file && <button className="mt-2" onClick={() => uploadFile()}>Add</button> }
     </div>
   );
 };

@@ -27,7 +27,7 @@ const About = () =>{
                 <h4>Store your files</h4>
                 <h4>Add friends and let them download</h4>
                 <h4>Chat with your friends</h4>
-                <button className={`${style.registerBtn}`}>register!</button>
+                <a href='/register'><button className={`${style.registerBtn}`}>register!</button></a>
                 </div>
                 <div className='container mt-5'>
                 <img src={safedata} alt='data'/>

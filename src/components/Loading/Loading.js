@@ -2,7 +2,7 @@ import loadingicon from "../../assets/channels-3.png";
 
 const Loading = () =>{
     return(
-        <div>
+        <div className="mt-2">
             <img src={loadingicon} /> 
         </div>
     )

@@ -1,3 +1,15 @@
 .userChat{
     margin-top: 10px;
 }
+
+.delete{
+    background-color: red;
+}
+
+.chat{
+    background-color: gold;
+}
+
+.files{
+    background-color: aqua;
+}

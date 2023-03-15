@@ -1,6 +1,7 @@
 import style from "../Menu/Menu.module.css";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+
 
 const Menu = () => {
 
@@ -12,37 +13,43 @@ const Menu = () => {
     setAuth(false)
   }
 
+  const navLinkStyle = ({isActive}) =>{
+    return{
+      color: isActive ? "#0000FF" : "black"
+    }
+  }
+
   return (
     <div className={`${style.menuContainer} container mt-3`}>
       <ul className={style.menu}>
         {auth ? (
           <>
           <li className={style.menuItem}>
-            <Link to='/myfiles' className={style.element}>Files</Link>
+            <NavLink style={navLinkStyle} to='/myfiles'>Files</NavLink>
         </li>
         <li className={style.menuItem}>
-        <Link to='/profile' className={style.element}>Profile</Link>
+        <NavLink style={navLinkStyle} to='/profile'>Profile</NavLink>
         </li>
         <li className={style.menuItem}>
-        <Link to='/myfriends' className={style.element}>Friends</Link>
+        <NavLink style={navLinkStyle}  to='/myfriends'>Friends</NavLink>
         </li>
         <li className={style.menuItem}>
-        <Link to='/' onClick={logout} className={style.element}>Logout</Link>
+        <NavLink style={navLinkStyle}  to='/' onClick={logout} >Logout</NavLink>
         </li>
           </>
         ) : (
           <>
           <li className={style.menuItem}>
-          <Link to='/' className={style.element}>Home</Link>
+          <NavLink style={navLinkStyle}  to='/' >Home</NavLink>
         </li>
         <li className={style.menuItem}>
-        <Link to='/pricing' className={style.element}>Pricing</Link>
+        <NavLink style={navLinkStyle}  to='/pricing'>Pricing</NavLink>
         </li>
         <li className={style.menuItem}>
-        <Link to='/register' className={style.element}>Register</Link>
+        <NavLink style={navLinkStyle}  to='/register'>Register</NavLink>
         </li>
           <li className={style.menuItem}>
-          <Link to='/login' className={style.element}>Login</Link>
+          <NavLink style={navLinkStyle}  to='/login'>Login</NavLink>
           </li>
           </>
         )}

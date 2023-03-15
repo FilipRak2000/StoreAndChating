@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import style from '../Friends/Friends.module.css'
 import FindFriends from './FindFriends/FindFriends'
-import Friend from './Friend/Friend'
 import { collection, query, where, getDocs, getDoc, updateDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from '../../firebase';
 import useAuth from '../../hooks/useAuth';
 import { doc } from 'firebase/firestore';
 import Chats from '../Chats/Chats';
+import { onSnapshot } from 'firebase/firestore';
 
 
 
@@ -15,6 +15,7 @@ import Chats from '../Chats/Chats';
 const Friends = () =>{
 
 const [peoplefb, setPeoplefb] = useState([])
+const [friends, setfriends] = useState([])
 const [auth] = useAuth()
 let allpeople = []
 
@@ -38,24 +39,32 @@ useEffect(() =>{
 }, [])
 
 
-const userFriends = async () =>{
-    const q = query(collection(db, "users", auth.userId, 'friends'))
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        console.log(doc.data())
-    });
-}
-
 useEffect(() =>{
-    userFriends()
+
+    const getfriends = () => {
+        const unsub = onSnapshot(doc(db, "userChats", auth.userId), (doc) => {
+            setfriends(doc.data())
+            console.log()
+        });
+        return  () => {
+            unsub()
+        }
+    }
+
+    getfriends()
+
 }, [])
+
 
     const [people, setPeople] = useState([])
 
     
     const filter = (term) =>{
-      let result = peoplefb.filter(x => x.email.includes(term) && !(auth.email === x.email))
+        let friendsEmails = Object.entries(friends)?.map((friend) => (friend[1].userInfo.email))
+      let result = peoplefb.filter(x => x.email.includes(term) && !(auth.email === x.email) && !friendsEmails.includes(x.email))
         setPeople(result)
+
+        console.log(friendsEmails);
       console.log(term)
       console.log(auth.email)
     }
@@ -65,7 +74,6 @@ useEffect(() =>{
     const add = async (person) => {
         
 
-        // create chat between users 
         const combinedId = auth.userId > person.id ? auth.userId + person.id : person.id + auth.userId
         try{
             const res = await getDoc(doc(db, "chats", combinedId))
@@ -87,6 +95,7 @@ useEffect(() =>{
                     },
                     [combinedId + ".date"]: serverTimestamp()
                 })
+                setPeople(prevPeople => prevPeople.filter(p => p.id !== person.id));
             }
         }catch(err){
             console.log(err)

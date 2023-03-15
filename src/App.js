@@ -21,6 +21,7 @@ import Pricing from "./pages/Pricing/Pricing";
 import Register from "./pages/Auth/Register/Register";
 import MyProfile from "./pages/Profile/Profile";
 import { ChatContextProvider } from "./context/chatContext";
+import FriendFiles from "./components/FriendFiles/FriendFiles";
 
 
 
@@ -41,15 +42,17 @@ function App() {
         element={state.user ? <MyProfile /> : <Navigate to={"/login"} />}
       />
       <Route path="/login" element={<Login />} />
+      <Route path="/friendfiles/:id/:email" element={state.user ? <FriendFiles /> : <Navigate to={"/login"}/>}/>
       <Route path="/pricing" element={<Pricing/>} />
       <Route path="/register" element={<Register/>} />
       <Route
         path="/myfriends"
-        element={state.user ? <MyFriends /> : <Navigate to={"login"} />}
+        element={state.user ? <MyFriends /> : <Navigate to={"/login"} />}
       />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
+  
 
   return (
     <Router>
@@ -61,7 +64,7 @@ function App() {
         }}
       >
         <ChatContextProvider>
-        <Layout logo={logo} menu={menu} content={content} />
+        <Layout logo={logo} menu={menu} content={content}/>
         </ChatContextProvider>
       </AuthContext.Provider>
     </Router>
