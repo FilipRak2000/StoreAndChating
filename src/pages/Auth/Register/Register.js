@@ -4,17 +4,13 @@ import style from "../Register/Register.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Error from "../../../components/Error/Error";
-import { doc, setDoc } from "firebase/firestore"; 
-import { db } from "../../../firebase"
-
-
-
-
-
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
+import Loading from "../../../components/Loading/Loading";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [auth, setAuth] = useAuth()
+  const [auth, setAuth] = useAuth();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -22,6 +18,7 @@ const Register = () => {
 
   const register = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axios.post(
         `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_PIZZA}`,
@@ -31,11 +28,11 @@ const Register = () => {
           returnSecureToken: true,
         }
       );
-      await setDoc(doc(db, "users", res.data.localId ), {
+      await setDoc(doc(db, "users", res.data.localId), {
         email: email,
-        uid: res.data.localId
+        uid: res.data.localId,
       });
-      await setDoc(doc(db, "userChats", res.data.localId), {})
+      await setDoc(doc(db, "userChats", res.data.localId), {});
       console.log(res);
       setAuth({
         email: res.data.email,
@@ -46,10 +43,8 @@ const Register = () => {
     } catch (er) {
       setError(er.response.data.error.message);
     }
+    setLoading(false);
   };
-
-
-
 
   return (
     <div className={`${style.register} container text-center`}>
@@ -77,9 +72,13 @@ const Register = () => {
             {error}
           </div>
         ) : null}
-        <button className="mt-2" onClick={register}>
-          Register
-        </button>
+        {loading ? (
+          <Loading />
+        ) : (
+          <button className="mt-2" onClick={register}>
+            Register
+          </button>
+        )}
       </form>
     </div>
   );

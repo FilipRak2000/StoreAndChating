@@ -13,7 +13,7 @@ const Chat = () =>{
             <p className="text-dark">Chat with {data.user?.email}</p>
             </div>
             <div className={style.messageContainer}>
-                <Messages/>
+                <Messages user={data.user?.email}/>
             </div>
             <MessageInput/>
         </div>

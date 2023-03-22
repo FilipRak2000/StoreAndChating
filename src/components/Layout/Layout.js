@@ -4,7 +4,7 @@ const Layout = (props) =>{
             <div>{props.logo}</div>
             <div>{props.menu}</div>
             <div>{props.content}</div>
-            <div>{props.footer}</div>
+            
         </div>
     )
 }

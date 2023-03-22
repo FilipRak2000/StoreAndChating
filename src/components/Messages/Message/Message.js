@@ -10,7 +10,8 @@ const Message = ({message}) =>{
     return(
         <div className="message_owner">
             <div className="message_info">
-                <p className="text-dark">{message.senderId === auth.userId ? auth.email : data.user.email}</p>
+
+                {message.text && <p className="text-dark">{message.senderId === auth.userId ? auth.email : data.user.email}</p> }
             </div>
             <div className="message_content">
                 <p>{message.text}</p>

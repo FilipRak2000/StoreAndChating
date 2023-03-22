@@ -2,3 +2,11 @@
     background-color:#0000FF;
     color: white;
 }
+
+.filescontainer{
+    background-color: #00807F;
+    margin-top: 20px;
+    color: white;
+    padding: 20px;
+    text-align: left;
+}

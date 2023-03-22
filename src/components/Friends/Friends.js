@@ -111,7 +111,7 @@ useEffect(() =>{
             <FindFriends filter={(term) => filter(term)}/>
             {people.map(person => (
             <>
-                <h1 className='mt-2' key={person.id}>{person.email} <button onClick={() => add(person)}>Add</button></h1>
+                <h3 className='mt-2' key={person.id}>{person.email} <button onClick={() => add(person)}>Add</button></h3>
             </>
                 
             ))}
